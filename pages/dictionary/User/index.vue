@@ -1,0 +1,113 @@
+<template>
+  <main>
+    <h1>Справочник пользователей системы</h1> 
+    <div>
+        <label>----------</label>
+    </div>
+    <nuxt-link to="/dictionary">
+      <button>Выход</button>
+    </nuxt-link>    
+    <button v-on:click="createRow"> (+) Создать</button>
+    <div>
+      <label>----------</label>
+    </div>
+    <div>      
+      <vue-good-table
+      @on-selected-rows-change="selectionChanged"
+        :columns="columns"
+        :rows="rows"
+        :fixed-header="true" 
+        :select-options="{ 
+            enabled: true,
+            selectOnCheckboxOnly: true, }"
+        compactMode>
+        <div slot="selected-row-actions">
+          <button v-on:click="deleteRow"> (-) Удалить</button>
+        </div>
+      </vue-good-table>
+    </div>
+  </main>
+</template>
+
+<script>
+export default {
+  middleware({ store, redirect }) {
+    // retrieving keys via object destructuring
+    const UsertAuthID = localStorage.getItem("UsertAuthID");
+    console.log("UsertAuthID=", UsertAuthID);
+    if (!UsertAuthID) return redirect("/auth");
+  },
+  data() {
+    return {
+      columns: [
+        {
+          label: "id",
+          field: "id",
+          type: "number",
+          width: "50px",
+          tooltip: "Порядковый номер позиции справочника",
+        },
+        {
+          label: "Наименование позиции справочника",
+          field: "Name",
+          width: "500px",
+          filterOptions: {
+            enabled: true,
+          },
+          html: true,
+        },
+        {
+          label: "Описание",
+          field: "Description",
+          filterOptions: {
+            enabled: true,
+          },
+        },
+      ],
+      selectedRows: [],
+    };
+  },
+  //this.$route.params.{parameterName}
+  async asyncData({ app }) {
+    const config = { params: { module: "dictionary", form: "User", id: 0 } };
+    const formList = await app.$axios.$get("http://localhost:3001/api", config);
+    console.log("formList=", formList);
+    const rows = formList.map((row) => {
+      return {
+        id: row.id,
+        Name: '<a href="/dictionary/User/' + row.id + '">' + row.Name + "</a>",
+        Description: row.Description,
+      };
+    });
+    return { rows };
+  },
+  methods: {
+    selectionChanged(rows) {
+      this.$data.selectedRows = rows.selectedRows;
+    },
+    createRow() {
+      const formData = {
+        module: "dictionary",
+        form: "User",
+      };
+      //console.log("formData=", formData);
+      this.$axios.$post("http://localhost:3001/api", formData);
+
+      this.$nuxt.refresh();
+    },
+    deleteRow() {
+      //console.log("selectedRows=", this.$data.selectedRows);
+      const formData = {
+        data: {
+          module: "dictionary",
+          form: "User",
+          columnList: this.$data.selectedRows,
+        },
+      };
+      this.$axios.$delete("http://localhost:3001/api", formData);
+
+      this.$nuxt.refresh();
+    },
+  },
+};
+</script>
