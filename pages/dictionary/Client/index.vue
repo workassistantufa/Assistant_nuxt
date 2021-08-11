@@ -70,7 +70,7 @@ export default {
   //this.$route.params.{parameterName}
   async asyncData({ app }) {
     const config = { params: { module: "dictionary", form: "Client", id: 0 } };
-    const formList = await app.$axios.$get("http://localhost:3001/api", config);
+    const formList = await app.$axios.$get("api", config);
     console.log("formList=", formList);
     const rows = formList.map((row) => {
       return {
@@ -92,7 +92,7 @@ export default {
         form: "Client",
       };
       //console.log("formData=", formData);
-      this.$axios.$post("http://localhost:3001/api", formData);
+      this.$axios.$post("api", formData);
 
       this.$nuxt.refresh();
     },
@@ -105,7 +105,7 @@ export default {
           columnList: this.$data.selectedRows,
         },
       };
-      this.$axios.$delete("http://localhost:3001/api", formData);
+      this.$axios.$delete("api", formData);
 
       this.$nuxt.refresh();
     },

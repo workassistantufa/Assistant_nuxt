@@ -43,7 +43,7 @@ export default {
   },
   //this.$route.params.{parameterName}
   async asyncData({ app }) {
-    const moduleList = await app.$axios.$get("http://localhost:3001/api");
+    const moduleList = await app.$axios.$get("api");
     //console.log('moduleList=',moduleList);
     const rows = moduleList.map((row) => {
       return {

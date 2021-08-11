@@ -51,7 +51,7 @@ export default {middleware({ store, redirect }) {
   //this.$route.params.{parameterName}
   async asyncData({ app}) {
     const config = { params: { module: 'dictionary' } }
-    const dictionaryList = await app.$axios.$get("http://localhost:3001/api", config);
+    const dictionaryList = await app.$axios.$get("api", config);
     console.log('dictionaryList=',dictionaryList);
     const rows = dictionaryList.map((row) => {
       return {

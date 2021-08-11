@@ -38,7 +38,7 @@ export default {
     const config = {
       params: { module: "dictionary", form: "Client", id: params.id },
     };
-    const data = await app.$axios.$get("http://localhost:3001/api", config);
+    const data = await app.$axios.$get("api", config);
     console.log("data=", data);
     const formData = {
       id: data._id._Value,
@@ -61,7 +61,7 @@ export default {
         },
       };
       console.log("formData=", formData);
-      this.$axios.$post("http://localhost:3001/api", formData);
+      this.$axios.$post("api", formData);
     },
   },
 };

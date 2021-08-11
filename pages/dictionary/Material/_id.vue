@@ -51,7 +51,7 @@ export default {
     let config = {
       params: { module: "dictionary", form: "Material", id: params.id },
     };
-    let data = await app.$axios.$get("http://localhost:3001/api", config);
+    let data = await app.$axios.$get("api", config);
 
     const formData = {
       id: data._id._Value,
@@ -63,14 +63,14 @@ export default {
     config = {
       params: { module: "dictionary", form: "Client", id: 0 },
     };
-    data = await app.$axios.$get("http://localhost:3001/api", config);
+    data = await app.$axios.$get("api", config);
     //console.log("data=", data);
     formData.Clients = data;
 
     config = {
       params: { module: "dictionary", form: "Contractor", id: 0 },
     };
-    data = await app.$axios.$get("http://localhost:3001/api", config);
+    data = await app.$axios.$get("api", config);
     formData.Contractors = data;
     //console.log("formData=", formData);
     return { formData };
@@ -90,7 +90,7 @@ export default {
         },
       };
       console.log("formData=", formData);
-      this.$axios.$post("http://localhost:3001/api", formData);
+      this.$axios.$post("api", formData);
     },
   },
 };
