@@ -27,13 +27,12 @@ export default {
   },
   data() {
     return {
-      formData: {},
-      CorrectUsertAuthID 
+      formData: {} 
     };
   },
   methods: {
     async enterForm() {
-      console.log("this.data.formData.Name=", this.$data.formData);
+      console.log("this.data.formData.=", this.$data.formData);
       const formData = {
         module: "session",
         data: {
