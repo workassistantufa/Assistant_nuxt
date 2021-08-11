@@ -41,7 +41,7 @@ export default {
         },
       };
       console.log("formData=", formData);
-      const token = await this.$axios.$post('',formData);
+      const token = await this.$axios.$post('api',formData);
       console.log('token=', token.Token);
       if(token.Token)localStorage.setItem('UsertAuthID', token.Token);
     },
