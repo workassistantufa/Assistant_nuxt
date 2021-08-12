@@ -45,8 +45,8 @@ export default {
       console.log("token=", token.Token);
       if (token.Token) {
         localStorage.setItem("UsertAuthID", token.Token);
-        console.log('this=',this);
-        this.redirect("/");
+        //console.log('this=',this);
+        this.$nuxt.refresh();
       }
     },
   },
