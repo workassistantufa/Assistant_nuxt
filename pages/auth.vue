@@ -14,20 +14,20 @@
 
 <script>
 export default {
-    middleware({ store, redirect }) {
-    // retrieving keys via object destructuring
-    const UsertAuthID = localStorage.getItem('UsertAuthID');
-    console.log('UsertAuthID=',UsertAuthID);
-    //localStorage.removeItem('cats');
-    //const isAuthenticated = store.state.authenticated
-    //if (!isAuthenticated) {
-    //  return redirect('/login')
-    //}
-    if(UsertAuthID) return redirect('/');
+   middleware(app) {
+   //retrieving keys via object destructuring
+  const UsertAuthID = localStorage.getItem('UsertAuthID');
+  console.log('UsertAuthID=',UsertAuthID);
+  //localStorage.removeItem('cats');
+  //const isAuthenticated = store.state.authenticated
+  //if (!isAuthenticated) {
+  //  return redirect('/login')
+  //}
+  if(UsertAuthID) return app.redirect('/');
   },
   data() {
     return {
-      formData: {} 
+      formData: {},
     };
   },
   methods: {
@@ -41,9 +41,13 @@ export default {
         },
       };
       console.log("formData=", formData);
-      const token = await this.$axios.$post('api',formData);
-      console.log('token=', token.Token);
-      if(token.Token)localStorage.setItem('UsertAuthID', token.Token);
+      const token = await this.$axios.$post("api", formData);
+      console.log("token=", token.Token);
+      if (token.Token) {
+        localStorage.setItem("UsertAuthID", token.Token);
+        console.log('this=',this);
+        this.redirect("/");
+      }
     },
   },
 };

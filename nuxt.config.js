@@ -42,7 +42,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: (process.env.NODE_ENV !== 'dev') ? 'http://work-assistant.ru:3002' : 'http://localhost:3001'
+    //baseURL: (process.env.NODE_ENV === 'dev') ?  'http://localhost:3001' : 'http://work-assistant.ru:3002'
+    baseURL: 'http://localhost:3001'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
