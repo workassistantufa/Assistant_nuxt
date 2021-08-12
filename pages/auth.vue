@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async enterForm() {
-      console.log("this.data.formData.=", this.$data.formData);
+      //console.log("this.data.formData.=", this.$data.formData);
       const formData = {
         module: "session",
         data: {
@@ -40,13 +40,16 @@ export default {
           Password: this.$data.formData.Password,
         },
       };
-      console.log("formData=", formData);
+      //console.log("formData=", formData);
       const token = await this.$axios.$post("api", formData);
-      console.log("token=", token.Token);
+      //console.log("token=", token.Token);
       if (token.Token) {
         localStorage.setItem("UsertAuthID", token.Token);
         //console.log('this=',this);
-        this.$nuxt.refresh();
+        //this.$nuxt.refresh();
+        //this.location.reload();
+        //this.$root.reload()
+        window.location.reload();
       }
     },
   },

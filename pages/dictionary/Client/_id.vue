@@ -22,11 +22,19 @@
 
 <script>
 export default {
-  middleware({ store, redirect }) {
-    // retrieving keys via object destructuring
+  async middleware(app) {
     const UsertAuthID = localStorage.getItem("UsertAuthID");
-    console.log("UsertAuthID=", UsertAuthID);
-    if (!UsertAuthID) return redirect("/auth");
+    //console.log("UsertAuthID=", UsertAuthID);
+    if (!UsertAuthID) return app.redirect("/auth");
+    
+    const config = {
+      params: { module: "session", UsertAuthID },
+    };
+    const token = await app.$axios.$get("api", config);
+    if (token.Error == "Token is expired") {
+      localStorage.removeItem("UsertAuthID");
+      return app.redirect("/auth");
+    }
   },
   data() {
     return {

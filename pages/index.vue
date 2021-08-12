@@ -15,10 +15,10 @@
 <script>
 export default {
   async middleware(app) {
-    // retrieving keys via object destructuring
     const UsertAuthID = localStorage.getItem("UsertAuthID");
-    console.log("UsertAuthID=", UsertAuthID);
+    //console.log("UsertAuthID=", UsertAuthID);
     if (!UsertAuthID) return app.redirect("/auth");
+    
     const config = {
       params: { module: "session", UsertAuthID },
     };

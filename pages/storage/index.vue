@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>Справочники</h1> 
+    <h1>Складской учет</h1> 
     <div>
     <label>----------</label>
     </div>
@@ -26,7 +26,7 @@ export default {
     const UsertAuthID = localStorage.getItem("UsertAuthID");
     //console.log("UsertAuthID=", UsertAuthID);
     if (!UsertAuthID) return app.redirect("/auth");
-    
+
     const config = {
       params: { module: "session", UsertAuthID },
     };
@@ -44,10 +44,10 @@ export default {
           field: "id",
           type: "number",
           width: "50px",
-          tooltip: "Порядковый номер справочника",
+          tooltip: "Порядковый номер документа",
         },
         {
-          label: "Наименование справочника",
+          label: "Наименование документа",
           field: "Name",
           filterOptions: {
             enabled: true,
@@ -57,15 +57,14 @@ export default {
       ],
     };
   },
-  //this.$route.params.{parameterName}
   async asyncData({ app }) {
-    const config = { params: { module: "dictionary" } };
-    const dictionaryList = await app.$axios.$get("api", config);
-    console.log("dictionaryList=", dictionaryList);
-    const rows = dictionaryList.map((row) => {
+    const config = { params: { module: "storage" } };
+    const list = await app.$axios.$get("api", config);
+    console.log("list=", list);
+    const rows = list.map((row) => {
       return {
         id: row.id,
-        Name: '<a href="/dictionary/' + row.form + '">' + row.Name + "</a>",
+        Name: '<a href="/storage/' + row.form + '">' + row.Name + "</a>",
       };
     });
     return { rows };
